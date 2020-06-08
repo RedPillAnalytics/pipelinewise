@@ -1,0 +1,14 @@
+steps:
+- name: gcr.io/kaniko-project/executor:latest
+  args:
+  - --destination=gcr.io/$PROJECT_ID/pipelinewise:$SHORT_SHA
+  - --cache=true
+  - --cache-ttl=48h
+  - --single-snapshot
+  - --context=./
+  id: kaniko-build
+- name: gcr.io/$PROJECT_ID/pipelinewise:$SHORT_SHA
+  id: kaniko-test
+  args:
+    - tasks
+timeout: 3600s
