@@ -1,0 +1,70 @@
+---
+
+# ------------------------------------------------------------------------------
+# General Properties
+# ------------------------------------------------------------------------------
+id: "harvest"                             # Unique identifier of the tap
+name: "Harvest"                           # Name of the tap
+type: "tap-harvest"                       # !! THIS SHOULD NOT CHANGE !!
+owner: "somebody@foo.com"              # Data owner to contact
+
+
+# ------------------------------------------------------------------------------
+# Source (Tap) - Harvest connection details
+# ------------------------------------------------------------------------------
+db_conn:
+  # OAuth authentication
+  client_secret: "<oauth-client-secret>"  # Plain string or vault encrypted
+  client_id: "<oauth-client-id>"
+  refresh_token: "<refresh-token>"        # Plain string or vault encrypted
+  start_date: "2010-01-01"                # specifies the date at which the tap will begin pulling data
+
+
+# ------------------------------------------------------------------------------
+# Destination (Target) - Target properties
+# Connection details should be in the relevant target YAML file
+# ------------------------------------------------------------------------------
+target: "bigquery"                        # ID of the target connector where the data will be loaded
+batch_size_rows: 20000                    # Batch size for the stream to optimise load performance
+default_target_schema: "harvest"          # Target schema where the data will be loaded
+
+# ------------------------------------------------------------------------------
+# Source to target Schema mapping
+# ------------------------------------------------------------------------------
+schemas:
+
+  - source_schema: "harvest"              # This is mandatory, but can be anything in this tap type
+    target_schema: "harvest"              # Target schema in the destination Data Warehouse
+    target_schema_select_permissions:     # Optional: Grant SELECT on schema and tables that created
+      - grp_stats
+
+    # List of Jira tables to replicate into destination Data Warehouse
+    # Tap-Jira will use the best incremental strategies automatically to replicate data
+    tables:
+
+      # Tables replicated incrementally
+      - table_name: "changelogs"
+      - table_name: "clients"
+      - table_name: "contacts"
+      - table_name: "estimate_item_categories"
+      - table_name: "estimate_messages"
+      - table_name: "estimates"
+    	- table_name: "expense_categories"
+    	- table_name: "expenses"
+    	- table_name: "invoice_item_categories"
+    	- table_name: "invoice_messages"
+    	- table_name: "invoice_payments"
+    	- table_name: "invoices"
+    	- table_name: "project_tasks"
+    	- table_name: "project_users"
+    	- table_name: "projects"
+    	- table_name: "roles"
+    	- table_name: "tasks"
+    	- table_name: "time_entries"
+    	- table_name: "user_projects"
+    	- table_name: "users"
+
+      # OPTIONAL: Load time transformations - you can add it to any table
+      #transformations:
+      #  - column: "some_column_to_transform" # Column to transform
+      #    type: "SET-NULL"                   # Transformation type
