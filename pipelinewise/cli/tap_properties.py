@@ -230,6 +230,16 @@ def get_tap_properties(tap=None, temp_dir=None):
             'default_replication_method': 'INCREMENTAL',
             'default_data_flattening_max_level': 0
         },
+        'tap-harvest': {
+            'tap_config_extras': {
+                'user_agent': 'PipelineWise - Tap Harvest'
+            },
+            'tap_stream_id_pattern': '{{table_name}}',
+            'tap_stream_name_pattern': '{{table_name}}',
+            'tap_catalog_argument': '--properties',
+            'default_replication_method': 'INCREMENTAL',
+            'default_data_flattening_max_level': 0
+        },
         # Default values to use as a fallback method
         'DEFAULT': {
             'tap_config_extras': {},

@@ -183,6 +183,7 @@ EXTRA_CONNECTORS=(
     tap-oracle
     tap-zuora
     tap-google-analytics
+    tap-harvest
     target-bigquery
 )
 
